@@ -1,0 +1,843 @@
+<title>Ricky Setiawan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Layout concept: a field-survey report — sticky coordinate-tab nav down the
+     side, a title block with measurement ticks for a hero, and each section
+     styled as a numbered survey sheet with a blueprint grid ground. */
+  :root{
+    --bg:#EEF1F3;
+    --panel:#FFFFFF;
+    --ink:#101C26;
+    --ink-soft:#4B5A65;
+    --line:#C7D1D6;
+    --accent:#C97A2E;
+    --accent-ink:#5C3A16;
+    --teal:#2F6F6B;
+    --font-display:'Fraunces', 'Iowan Old Style', ui-serif, serif;
+    --font-body:'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B1B24;
+      --panel:#102530;
+      --ink:#E7EEF2;
+      --ink-soft:#9FB0BA;
+      --line:#233B47;
+      --accent:#F2A75A;
+      --accent-ink:#2A1A08;
+      --teal:#5FB3AC;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B1B24;
+    --panel:#102530;
+    --ink:#E7EEF2;
+    --ink-soft:#9FB0BA;
+    --line:#233B47;
+    --accent:#F2A75A;
+    --accent-ink:#2A1A08;
+    --teal:#5FB3AC;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.55;
+    padding-inline:20px;
+  }
+  a{color:var(--teal);}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;text-wrap:balance;margin:0;}
+  .mono{font-family:var(--font-mono);}
+  .wrap{max-width:920px;margin:0 auto;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top,0px);
+    z-index:20; margin:0 -20px; padding:10px 20px;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .topbar .id{font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); letter-spacing:.04em;}
+  .navtabs{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none;}
+  .navtabs::-webkit-scrollbar{display:none;}
+  .navtabs a{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+    padding:6px 10px; border:1px solid transparent; border-radius:3px;
+  }
+  .navtabs a:hover{border-color:var(--line); color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{padding-block:56px 40px; position:relative;}
+  .hero .tickrow{
+    display:flex; gap:4px; margin-bottom:22px; opacity:.55;
+  }
+  .tick{width:1px; height:10px; background:var(--ink-soft);}
+  .tick:nth-child(5n){height:16px;}
+  .kicker{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  .hero h1{font-size:clamp(34px,7vw,58px); line-height:1.02;}
+  .hero .role{
+    font-family:var(--font-mono); font-size:15px; color:var(--ink-soft); margin-top:14px; max-width:60ch;
+  }
+  .hero .summary{margin-top:18px; max-width:62ch; color:var(--ink-soft); font-size:15.5px;}
+  .divisionrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:18px;}
+  .divlabel{font-size:11px; color:var(--ink-soft); letter-spacing:.05em; text-transform:uppercase; margin-right:2px;}
+  .divtag{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.02em;
+    border:1px solid var(--teal); color:var(--teal); border-radius:20px; padding:4px 12px;
+  }
+  .contactrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .chip{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:12.5px;
+    border:1px solid var(--line); border-radius:3px; padding:8px 12px;
+    background:var(--panel); color:var(--ink);
+  }
+  .chip button{
+    font-family:var(--font-mono); font-size:11px; border:none; background:none; color:var(--teal);
+    cursor:pointer; padding:0; text-decoration:underline;
+  }
+
+  /* ---------- stat strip ---------- */
+  .statstrip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    border:1px solid var(--line); background:var(--line); margin-block:8px 48px; border-radius:4px; overflow:hidden;
+  }
+  .stat{background:var(--panel); padding:16px 14px; min-width:0;}
+  .stat .n{font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .stat .l{font-size:11.5px; color:var(--ink-soft); margin-top:4px; letter-spacing:.02em;}
+  @media (max-width:640px){ .statstrip{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- section shell ---------- */
+  section{padding-block:36px; border-top:1px solid var(--line); scroll-margin-top:56px;}
+  section:first-of-type{border-top:none;}
+  .sheet-head{display:flex; align-items:baseline; gap:14px; margin-bottom:22px; flex-wrap:wrap;}
+  .sheet-num{font-family:var(--font-mono); font-size:12px; color:var(--accent); border:1px solid var(--accent); border-radius:2px; padding:2px 7px;}
+  .sheet-head h2{font-size:24px;}
+  .sheet-head .sub{font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); letter-spacing:.03em;}
+
+  /* ---------- experience ---------- */
+  .role-item{display:grid; grid-template-columns:150px 1fr; gap:18px; padding-block:18px; border-top:1px dashed var(--line);}
+  .role-item:first-child{border-top:none;}
+  .role-item .when{font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); padding-top:2px;}
+  .role-item .title{font-weight:600; font-size:16px;}
+  .role-item .org{color:var(--teal); font-size:13.5px; margin-top:2px;}
+  .role-item ul{margin:10px 0 0; padding-left:18px; color:var(--ink-soft); font-size:14px;}
+  .role-item li{margin-bottom:6px;}
+  .role-item li b, .role-item li strong{color:var(--ink); font-weight:600;}
+  .li-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:10px; letter-spacing:.03em;
+    color:var(--teal); border:1px solid var(--teal); border-radius:3px; padding:1px 6px;
+    margin-right:8px; vertical-align:1px;
+  }
+  @media (max-width:640px){ .role-item{grid-template-columns:1fr;} .role-item .when{padding-top:0;} }
+
+  /* ---------- live dashboard demo ---------- */
+  .dash-panel{
+    border:1px solid var(--line); border-radius:6px; background:var(--panel);
+    padding:22px; margin-top:20px;
+  }
+  .dash-intro{color:var(--ink-soft); font-size:14px; max-width:68ch; margin:0 0 18px;}
+  .dash-controls{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:18px;}
+  .dash-controls .dclabel{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin-right:4px;}
+  .dash-filter{
+    font-family:var(--font-mono); font-size:12px; border:1px solid var(--line); background:var(--bg);
+    color:var(--ink); border-radius:20px; padding:6px 14px; cursor:pointer; transition:background .15s, color .15s, border-color .15s;
+  }
+  .dash-filter:hover{border-color:var(--teal);}
+  .dash-filter.active{background:var(--teal); border-color:var(--teal); color:var(--panel);}
+  .dash-kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-bottom:22px;}
+  @media (max-width:640px){ .dash-kpis{grid-template-columns:repeat(2,1fr);} }
+  .dash-kpi{background:var(--panel); padding:14px; min-width:0;}
+  .dash-kpi .dk-label{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em;}
+  .dash-kpi .dk-value{font-family:var(--font-mono); font-size:20px; font-weight:600; margin-top:4px; font-variant-numeric:tabular-nums;}
+  .dash-kpi.k-red .dk-value{color:#C94B4B;}
+  .dash-kpi.k-slm .dk-value{color:var(--accent);}
+  .dash-kpi.k-healthy .dk-value{color:var(--teal);}
+  .dash-chart-wrap{overflow-x:auto;}
+  .dash-chart-wrap svg{display:block; min-width:520px;}
+  .dash-bar-seg{transition:width .35s ease, x .35s ease;}
+  .dash-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-family:var(--font-mono); font-size:11px; color:var(--ink-soft);}
+  .dash-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dash-legend i{width:10px; height:10px; border-radius:2px; display:inline-block;}
+  .dash-foot{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); margin-top:14px;}
+
+  /* ---------- case studies ---------- */
+  .case{
+    border:1px solid var(--line); border-radius:6px; background:var(--panel);
+    padding:24px; margin-bottom:26px;
+  }
+  .case-tag{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent);}
+  .case h3{font-size:20px; margin-top:6px;}
+  .case .loc{font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .case-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:22px; margin-top:18px; align-items:start;}
+  @media (max-width:700px){ .case-grid{grid-template-columns:1fr;} }
+  .case p{color:var(--ink-soft); font-size:14px; margin:0 0 10px;}
+  .case-result{
+    border-left:2px solid var(--accent); padding-left:12px; margin-top:14px; font-size:13.5px;
+  }
+  .diagram{background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:10px; min-width:0;}
+  .diagram svg{width:100%; height:auto; display:block;}
+  .caption{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); text-align:center; margin-top:6px; letter-spacing:.02em;}
+  .tools-used{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px;}
+  .tools-used span{font-family:var(--font-mono); font-size:10.5px; border:1px solid var(--line); border-radius:2px; padding:2px 7px; color:var(--ink-soft);}
+
+  /* ---------- excel proof ---------- */
+  .xl-shot{border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--panel);}
+  .xl-shot img{display:block; width:100%; height:auto;}
+  .xl-shot-cap{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); text-align:center; padding:6px 8px; border-top:1px solid var(--line);}
+  .xl-formula-block{
+    background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:14px 16px;
+    font-family:var(--font-mono); font-size:12px; color:var(--ink); margin-top:14px; overflow-x:auto;
+  }
+  .xl-formula-block .fl{color:var(--ink-soft); margin-bottom:3px;}
+  .xl-formula-block .fl:not(:first-child){margin-top:10px;}
+  .xl-note{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:14px;}
+
+  /* ---------- skills ---------- */
+  .skillgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px 28px;}
+  @media (max-width:640px){ .skillgrid{grid-template-columns:1fr;} }
+  .skillcat .cathead{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--teal); margin-bottom:10px;}
+  .skillrow{display:flex; justify-content:space-between; gap:10px; padding-block:7px; border-top:1px dotted var(--line); font-size:13.5px;}
+  .skillrow:first-child{border-top:none;}
+  .skillrow span:last-child{color:var(--ink-soft); font-family:var(--font-mono); font-size:12px;}
+
+  /* ---------- education / leadership ---------- */
+  .cardrow{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:700px){ .cardrow{grid-template-columns:1fr;} }
+  .card{border:1px solid var(--line); border-radius:6px; padding:18px; background:var(--panel); min-width:0;}
+  .card .title{font-weight:600; font-size:15px;}
+  .card .org{color:var(--teal); font-size:13px; margin-top:2px;}
+  .card .when{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
+  .card p{font-size:13.5px; color:var(--ink-soft); margin:10px 0 0;}
+
+  /* ---------- footer ---------- */
+  footer{padding-block:40px 60px; border-top:1px solid var(--line); margin-top:10px;}
+  footer .row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;}
+  footer h3{font-size:22px;}
+  footer .foot-note{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:26px;}
+  .toast{
+    position:fixed; bottom:calc(18px + env(safe-area-inset-bottom,0px)); left:50%; transform:translateX(-50%) translateY(12px);
+    background:var(--ink); color:var(--bg); font-family:var(--font-mono); font-size:12px;
+    padding:8px 14px; border-radius:4px; opacity:0; transition:opacity .2s, transform .2s; pointer-events:none; z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+
+<div class="topbar">
+  <span class="id mono">RFS&nbsp;/&nbsp;PORTFOLIO</span>
+  <nav class="navtabs">
+    <a href="#dashboard-demo">Dashboard</a>
+    <a href="#experience">Experience</a>
+    <a href="#cases">Case Studies</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <section class="hero" id="top">
+    <div class="tickrow" aria-hidden="true">
+      <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+      <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+      <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+    </div>
+    <p class="kicker">Field report — sales intelligence</p>
+    <h1>Ricky Fasha Setiawan</h1>
+    <p class="role mono">Business Intelligence Specialist · Sales Analytics · Channel &amp; Root-Cause Investigation</p>
+    <p class="summary">I turn sales, pricing, and inventory data into decisions — across divisions, not
+      just one. Currently at Nippon Paint Indonesia, reporting directly to National Sales Management on
+      channel strategy, while partnering with Finance on pricing impact and owning the stock-health
+      dashboard that Operations uses to catch at-risk inventory nationwide.</p>
+    <div class="divisionrow" aria-label="Divisions worked with">
+      <span class="divlabel mono">Works across</span>
+      <span class="divtag">Sales</span>
+      <span class="divtag">Finance</span>
+      <span class="divtag">Operations</span>
+      <span class="divtag">Marketing</span>
+    </div>
+    <div class="contactrow">
+      <span class="chip">ricky.setiawan0651@gmail.com <button onclick="copyText('ricky.setiawan0651@gmail.com', this)">copy</button></span>
+      <span class="chip">+62 822 1024 1970 <button onclick="copyText('+62 822 1024 1970', this)">copy</button></span>
+      <span class="chip"><a href="https://www.linkedin.com/in/rickysetiawan651" target="_blank" rel="noopener">linkedin.com/in/rickysetiawan651</a></span>
+      <span class="chip">Bogor, West Java, ID</span>
+    </div>
+  </section>
+
+  <div class="statstrip">
+    <div class="stat"><div class="n">850+</div><div class="l">sales reps monitored</div></div>
+    <div class="stat"><div class="n">90</div><div class="l">depots nationwide</div></div>
+    <div class="stat"><div class="n">200+</div><div class="l">stores diagnosed</div></div>
+    <div class="stat"><div class="n">5km</div><div class="l">radius, channel study</div></div>
+  </div>
+
+  <section id="dashboard-demo">
+    <div class="sheet-head">
+      <span class="sheet-num">01</span>
+      <h2>Live dashboard demo</h2>
+      <span class="sub">try it — filter by region</span>
+    </div>
+    <div class="dash-panel">
+      <p class="dash-intro">A working rebuild of the stock-health dashboard I own at Nippon Paint —
+        same structure, same logic, illustrative data. Filter by region and the KPIs and chart
+        recompute live, the way the real Power BI version does for National Sales Management.</p>
+
+      <div class="dash-controls">
+        <span class="dclabel">Region</span>
+        <button class="dash-filter active" data-region="All">All regions</button>
+        <button class="dash-filter" data-region="Sumatra">Sumatra</button>
+        <button class="dash-filter" data-region="Java West">Java West</button>
+        <button class="dash-filter" data-region="Java East">Java East</button>
+        <button class="dash-filter" data-region="Kalimantan">Kalimantan</button>
+      </div>
+
+      <div class="dash-kpis">
+        <div class="dash-kpi"><div class="dk-label">Total stock value</div><div class="dk-value" id="kpi-total">—</div></div>
+        <div class="dash-kpi k-red"><div class="dk-label">RED stock value</div><div class="dk-value" id="kpi-red">—</div></div>
+        <div class="dash-kpi k-slm"><div class="dk-label">SLM stock value</div><div class="dk-value" id="kpi-slm">—</div></div>
+        <div class="dash-kpi k-healthy"><div class="dk-label">Healthy stock value</div><div class="dk-value" id="kpi-healthy">—</div></div>
+      </div>
+
+      <div class="dash-chart-wrap">
+        <svg id="dash-chart" viewBox="0 0 640 260" role="img" aria-label="Stock value by depot, stacked by status"></svg>
+      </div>
+      <div class="dash-legend">
+        <span><i style="background:#C94B4B"></i>RED (at-risk)</span>
+        <span><i style="background:var(--accent)"></i>SLM (slow-moving)</span>
+        <span><i style="background:var(--teal)"></i>Healthy</span>
+      </div>
+      <div class="dash-foot">Dataset: 40 SKU-level records across 8 depots, 4 regions — same figures as the Excel workbook below. Illustrative, not company data.</div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sheet-head">
+      <span class="sheet-num">02</span>
+      <h2>Experience</h2>
+      <span class="sub">2022 — present</span>
+    </div>
+
+    <div class="role-item">
+      <div class="when">Oct 2024 —<br>Present</div>
+      <div>
+        <div class="title">Business Intelligence Specialist</div>
+        <div class="org">Nippon Paint Indonesia · North Jakarta</div>
+        <ul>
+          <li><span class="li-tag">Sales</span><strong>Direct counterpart to National Sales Management (M1)</strong> — presenting insight and recommendations that have shaped national sales decisions.</li>
+          <li><span class="li-tag">Sales</span>Built and maintain Power BI dashboards tracking sales performance and field activity across 850+ reps and 90 depots.</li>
+          <li><span class="li-tag">Operations</span>Own the stock-health dashboard (RED stock, SLM, ATP) across 90 depots — flagging at-risk inventory before it becomes a write-off.</li>
+          <li><span class="li-tag">Finance</span>Deep-dive SAP analysis of pricing, discounting, and RMCC impact for Finance.</li>
+          <li><span class="li-tag">IT/Data</span>Data-validation systems that catch anomalies (mock GPS pins, inaccurate field entries) before they reach reporting.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-item">
+      <div class="when">Feb 2024 —<br>Jun 2024</div>
+      <div>
+        <div class="title">Marketing Data Analyst</div>
+        <div class="org">PT. Sumber Alfaria Trijaya, Tbk (Alfamart) · Bogor</div>
+        <ul>
+          <li>Diagnosed 200+ underperforming stores and built 10+ dashboards for real-time marketing decisions.</li>
+          <li>Instagram strategy for Branch Parung: reach +830%, engagement +620%, followers +150%.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-item">
+      <div class="when">Oct 2023 —<br>Nov 2023</div>
+      <div>
+        <div class="title">Data Project Intern — Data Scientist Track</div>
+        <div class="org">Kalbe Nutritionals · Remote</div>
+        <ul>
+          <li>Predictive inventory model and churn model for at-risk customers; KPI dashboard for forecast accuracy.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="role-item">
+      <div class="when">Feb 2022 —<br>Present</div>
+      <div>
+        <div class="title">Founder, side business</div>
+        <div class="org">PT. Ganesha Wirya Pratama · Bogor</div>
+        <ul>
+          <li>Electrical-material supplier to Adaro Power / PT Alamtri Resources Indonesia Tbk — RFQ, pricing negotiation, and tax-compliant invoicing end to end.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="sheet-head">
+      <span class="sheet-num">03</span>
+      <h2>Case studies</h2>
+      <span class="sub">figures illustrative — company data anonymized</span>
+    </div>
+
+    <div class="case">
+      <div class="case-tag">Channel strategy · Geospatial</div>
+      <h3>Warna Abadi — does a hybrid store cannibalize its neighbors?</h3>
+      <div class="loc mono">Query: outlet type = hybrid traditional/modern · radius = 5km</div>
+      <div class="case-grid">
+        <div>
+          <p>Management wanted to know whether "Warna Abadi," a store straddling traditional and
+            modern-trade formats, was pulling volume away from the traditional outlets around it —
+            information needed to decide whether to push the outlet, protect the surrounding stores,
+            or simply maintain the relationship.</p>
+          <p>I mapped every traditional outlet within a 5km radius in Python, compared their sell-through
+            before and after Warna Abadi's ramp-up, and separated genuine cannibalization from
+            area-wide demand shifts.</p>
+          <div class="case-result">Outcome: findings went to National Sales Management (M1), who used
+            them to set the relationship strategy for the outlet and its neighbors rather than
+            treating the case on instinct.</div>
+          <div class="tools-used"><span>Python</span><span>geopandas</span><span>SAP sell-out data</span></div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 320 260" role="img" aria-label="Illustrative radius map of stores around Warna Abadi">
+            <defs>
+              <pattern id="gridpat" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M0 0H20V20" fill="none" stroke="var(--line)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="320" height="260" fill="url(#gridpat)"/>
+            <circle cx="160" cy="130" r="95" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 4"/>
+            <text x="160" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-soft)">5 KM RADIUS</text>
+            <circle cx="160" cy="130" r="7" fill="var(--accent)"/>
+            <text x="160" y="150" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--accent-ink)">WARNA ABADI</text>
+            <g fill="var(--teal)">
+              <circle cx="120" cy="90" r="4"/><circle cx="200" cy="95" r="4"/>
+              <circle cx="105" cy="150" r="4"/><circle cx="215" cy="155" r="4"/>
+              <circle cx="150" cy="60" r="4"/><circle cx="180" cy="185" r="4"/>
+              <circle cx="95" cy="115" r="4"/><circle cx="225" cy="110" r="4"/>
+            </g>
+            <g fill="var(--ink-soft)">
+              <circle cx="40" cy="40" r="4"/><circle cx="285" cy="45" r="4"/>
+              <circle cx="30" cy="220" r="4"/><circle cx="290" cy="210" r="4"/>
+            </g>
+            <text x="160" y="245" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-soft)">teal = traditional outlet in radius · grey = outside radius</text>
+          </svg>
+          <div class="caption">Illustrative reconstruction — not the original dataset</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-tag">Root-cause investigation · SAP</div>
+      <h3>Surabaya depot — tracing a sales drop back to its cause</h3>
+      <div class="loc mono">Factors checked: discount structure · operations · local market</div>
+      <div class="case-grid">
+        <div>
+          <p>A regional depot's sales had dropped and nobody could say why. Rather than guess, I ran a
+            structured pass across three candidate causes at once: discount and pricing structure
+            (a deep dive into SAP), operational execution at the depot, and shifts in the local market.</p>
+          <p>Narrowing across all three in parallel — instead of one at a time — found the combination
+            of factors actually responsible, faster than a sequential check would have.</p>
+          <div class="case-result">Outcome: depot management used the findings to build a mitigation
+            and action plan, closing the loop from "sales dropped" to a specific, assigned fix.</div>
+          <div class="tools-used"><span>SAP</span><span>Excel</span><span>Field interviews</span></div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 320 260" role="img" aria-label="Illustrative root-cause funnel diagram">
+            <rect x="0" y="0" width="320" height="260" fill="none"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="10">
+              <rect x="14" y="18" width="90" height="34" rx="3" fill="none" stroke="var(--teal)" stroke-width="1.4"/>
+              <text x="59" y="39" text-anchor="middle" fill="var(--ink)">Discounts / SAP</text>
+              <rect x="115" y="18" width="90" height="34" rx="3" fill="none" stroke="var(--teal)" stroke-width="1.4"/>
+              <text x="160" y="39" text-anchor="middle" fill="var(--ink)">Operations</text>
+              <rect x="216" y="18" width="90" height="34" rx="3" fill="none" stroke="var(--teal)" stroke-width="1.4"/>
+              <text x="261" y="39" text-anchor="middle" fill="var(--ink)">Market shift</text>
+              <path d="M59 52 L160 120" stroke="var(--line)" stroke-width="1.2" fill="none"/>
+              <path d="M160 52 L160 120" stroke="var(--line)" stroke-width="1.2" fill="none"/>
+              <path d="M261 52 L160 120" stroke="var(--line)" stroke-width="1.2" fill="none"/>
+              <rect x="105" y="120" width="110" height="34" rx="3" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.6"/>
+              <text x="160" y="141" text-anchor="middle" fill="var(--accent-ink)" font-weight="600">Sales drop</text>
+              <path d="M160 154 L160 190" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0 0 L8 4 L0 8 Z" fill="var(--accent)"/>
+                </marker>
+              </defs>
+              <rect x="85" y="192" width="150" height="34" rx="3" fill="none" stroke="var(--ink)" stroke-width="1.4"/>
+              <text x="160" y="213" text-anchor="middle" fill="var(--ink)">Action plan (depot)</text>
+            </g>
+          </svg>
+          <div class="caption">Illustrative structure of the investigation</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-tag">Inventory control · Stock health</div>
+      <h3>Stock health dashboard — catching aging inventory before it becomes a write-off</h3>
+      <div class="loc mono">Tracks: RED stock · SLM (slow-moving) · ATP (available-to-promise) · scope: 90 depots</div>
+      <div class="case-grid">
+        <div>
+          <p>Depots quietly accumulate stock that stops moving — aging into "RED" status, sliding into
+            slow-moving (SLM), or eating into a depot's available-to-promise (ATP) position. Left alone,
+            that stock becomes a write-down risk and starves the depot of room to receive fresh, sellable
+            inventory.</p>
+          <p>I own the dashboard that tracks all three metrics across the depot network, flag depots that
+            cross a risk threshold, and provide the deeper analysis a depot or management needs to find
+            why the stock got stuck — a pricing issue, a slow-selling SKU, or an operational gap.</p>
+          <div class="case-result">Outcome: flagged depots get pushed toward a fix — clear the stock,
+            adjust the order plan, or escalate — closing the loop between "stock is stuck" and a
+            resolved position with room for financially healthier inventory.</div>
+          <div class="tools-used"><span>SAP</span><span>Power BI</span><span>Excel</span></div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 320 260" role="img" aria-label="Illustrative chart of depots flagged RED stock declining over four months after dashboard rollout">
+            <defs>
+              <pattern id="gridpat2" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M0 0H20V20" fill="none" stroke="var(--line)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="320" height="260" fill="url(#gridpat2)"/>
+            <text x="160" y="24" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-soft)">DEPOTS FLAGGED RED STOCK</text>
+            <line x1="30" y1="210" x2="300" y2="210" stroke="var(--ink-soft)" stroke-width="1"/>
+            <line x1="75" y1="45" x2="75" y2="210" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <text x="75" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8.5" fill="var(--accent-ink)">DASHBOARD LIVE</text>
+            <g fill="var(--teal)">
+              <rect x="45" y="90" width="34" height="120"/>
+              <rect x="115" y="112" width="34" height="98"/>
+              <rect x="185" y="138" width="34" height="72"/>
+              <rect x="255" y="157" width="34" height="53"/>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink)">
+              <text x="62" y="83" text-anchor="middle">32%</text>
+              <text x="132" y="105" text-anchor="middle">26%</text>
+              <text x="202" y="131" text-anchor="middle">19%</text>
+              <text x="272" y="150" text-anchor="middle">14%</text>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-soft)">
+              <text x="62" y="225" text-anchor="middle">M1</text>
+              <text x="132" y="225" text-anchor="middle">M2</text>
+              <text x="202" y="225" text-anchor="middle">M3</text>
+              <text x="272" y="225" text-anchor="middle">M4</text>
+            </g>
+          </svg>
+          <div class="caption">Illustrative trend — figures reconstructed, not company data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="excel-proof">
+    <div class="sheet-head">
+      <span class="sheet-num">04</span>
+      <h2>Excel, past the word list</h2>
+      <span class="sub">real formulas, not hardcoded results</span>
+    </div>
+    <p class="dash-intro">Anyone can list "advanced Excel" on a CV. Here is an actual workbook built
+      around the same stock-health logic as the dashboard above — INDEX/MATCH lookups across sheets,
+      SUMIFS/COUNTIFS for the summary, nested IF for risk flagging, and conditional formatting that
+      reacts to the formula result, not a manually colored cell. Every number below is computed; change
+      an input and the whole sheet recalculates.</p>
+
+    <div class="case-grid" style="margin-top:18px;">
+      <div>
+        <div class="xl-formula-block">
+          <div class="fl">Stock Status (nested IF, per-depot threshold):</div>
+          =IF(F2&gt;=G2,"RED",IF(F2&gt;=0.6*G2,"SLM","Healthy"))
+          <div class="fl">Region lookup (INDEX/MATCH across sheets, IFERROR-guarded):</div>
+          =IFERROR(INDEX('Depot Lookup'!$B$2:$B$9,MATCH(A2,'Depot Lookup'!$A$2:$A$9,0)),"Unknown")
+          <div class="fl">Regional RED stock value (SUMIFS, pivot-style summary):</div>
+          =SUMIFS(Analysis!$E$2:$E$41,Analysis!$C$2:$C$41,A5,Analysis!$H$2:$H$41,"RED")
+        </div>
+        <p class="xl-note">385 formulas, 0 errors on recalculation. Depot names and figures are illustrative sample data.</p>
+      </div>
+      <div class="xl-shot">
+        <img src="excel-analysis.jpg" alt="Analysis sheet with INDEX/MATCH lookups and conditional formatting by stock status">
+        <div class="xl-shot-cap">Analysis tab — conditional formatting driven by the nested-IF formula</div>
+      </div>
+    </div>
+
+    <div class="case-grid" style="margin-top:22px;">
+      <div class="xl-shot" style="grid-column:1/-1;">
+        <img src="excel-summary.jpg" alt="Summary dashboard with SUMIFS pivot-style table and native Excel bar chart">
+        <div class="xl-shot-cap">Summary Dashboard tab — SUMIFS/COUNTIFS table feeding a native Excel chart</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sheet-head">
+      <span class="sheet-num">05</span>
+      <h2>Skills</h2>
+    </div>
+    <div class="skillgrid">
+      <div class="skillcat">
+        <div class="cathead">Data analysis &amp; visualization</div>
+        <div class="skillrow"><span>Power BI</span><span>daily use</span></div>
+        <div class="skillrow"><span>Microsoft Excel</span><span>daily use</span></div>
+        <div class="skillrow"><span>Tableau</span><span>working knowledge</span></div>
+      </div>
+      <div class="skillcat">
+        <div class="cathead">ERP &amp; systems</div>
+        <div class="skillrow"><span>SAP</span><span>sales, pricing, discount &amp; stock analysis</span></div>
+        <div class="skillrow"><span>Inventory analytics</span><span>RED stock, SLM, ATP monitoring</span></div>
+        <div class="skillrow"><span>CRM / ERP reporting</span><span>working knowledge</span></div>
+      </div>
+      <div class="skillcat">
+        <div class="cathead">Programming &amp; querying</div>
+        <div class="skillrow"><span>Python</span><span>geospatial, modeling</span></div>
+        <div class="skillrow"><span>SQL</span><span>working knowledge</span></div>
+      </div>
+      <div class="skillcat">
+        <div class="cathead">Design &amp; marketing tools</div>
+        <div class="skillrow"><span>Canva</span><span>working knowledge</span></div>
+        <div class="skillrow"><span>Adobe Illustrator</span><span>basic</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sheet-head">
+      <span class="sheet-num">06</span>
+      <h2>Education &amp; leadership</h2>
+    </div>
+    <div class="cardrow">
+      <div class="card">
+        <div class="title">Bachelor of Chemistry — GPA 3.65/4.00</div>
+        <div class="org">Universitas Gadjah Mada, Yogyakarta</div>
+        <div class="when">Oct 2020 – Aug 2024</div>
+        <p>Awardee, Beasiswa Pancakarsa Kabupaten Bogor.</p>
+      </div>
+      <div class="card">
+        <div class="title">President</div>
+        <div class="org">Keluarga Mahasiswa Kimia UGM</div>
+        <div class="when">Nov 2021 – Dec 2022</div>
+        <p>Led 140+ members across 8 divisions and 4 core managers; reviewed 100+ contracts and expenditures.</p>
+      </div>
+      <div class="card">
+        <div class="title">Social Media Specialist Coordinator</div>
+        <div class="org">Universitas Gadjah Mada</div>
+        <div class="when">Feb 2022 – Dec 2023</div>
+        <p>Led a 4-person team; +1,500 followers and +420% engagement for the Chemistry Department.</p>
+      </div>
+      <div class="card">
+        <div class="title">Field Officer</div>
+        <div class="org">KKN-PPM UGM Raja Ampat Berkisah</div>
+        <div class="when">Jun 2023 – Aug 2023</div>
+        <p>Led VCO, eco-enzyme, and mangrove-soap workshops reaching 65–75% of a 60-person village.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="row">
+      <div>
+        <h3>Let's talk data.</h3>
+        <p style="color:var(--ink-soft); max-width:40ch; margin-top:8px;">Open to Sales Excellence,
+          Commercial Analytics, and Business Intelligence roles.</p>
+      </div>
+      <div class="contactrow">
+        <span class="chip">ricky.setiawan0651@gmail.com <button onclick="copyText('ricky.setiawan0651@gmail.com', this)">copy</button></span>
+        <span class="chip">+62 822 1024 1970 <button onclick="copyText('+62 822 1024 1970', this)">copy</button></span>
+        <span class="chip"><a href="https://www.linkedin.com/in/rickysetiawan651" target="_blank" rel="noopener">LinkedIn ↗</a></span>
+      </div>
+    </div>
+    <div class="foot-note">Field report compiled by Ricky Fasha Setiawan · Bogor, Indonesia</div>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+  function copyText(text, btn){
+    var toast = document.getElementById('toast');
+    function flash(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1400);
+    }
+    try{
+      navigator.clipboard.writeText(text).then(function(){ flash('Copied'); }).catch(function(){ fallback(); });
+    }catch(e){ fallback(); }
+    function fallback(){
+      var r = document.createRange();
+      var span = document.createElement('span');
+      span.textContent = text;
+      span.style.position='fixed'; span.style.opacity='0';
+      document.body.appendChild(span);
+      r.selectNode(span);
+      var sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(r);
+      try{ document.execCommand('copy'); flash('Copied'); }catch(e2){ flash('Select & copy manually'); }
+      sel.removeAllRanges();
+      document.body.removeChild(span);
+    }
+  }
+
+  // ---- Live dashboard demo ----
+  // Illustrative sample data — mirrors the Excel workbook in the Excel Proof
+  // section below. Not real company figures.
+  var DASH_DATA = [
+    {depot:"DP-01",region:"Sumatra",value:35328000,status:"SLM"},
+    {depot:"DP-01",region:"Sumatra",value:17190000,status:"RED"},
+    {depot:"DP-01",region:"Sumatra",value:36840000,status:"Healthy"},
+    {depot:"DP-01",region:"Sumatra",value:7888000,status:"RED"},
+    {depot:"DP-01",region:"Sumatra",value:22260000,status:"RED"},
+    {depot:"DP-02",region:"Java West",value:14040000,status:"RED"},
+    {depot:"DP-02",region:"Java West",value:26724000,status:"RED"},
+    {depot:"DP-02",region:"Java West",value:9996000,status:"SLM"},
+    {depot:"DP-02",region:"Java West",value:6240000,status:"Healthy"},
+    {depot:"DP-02",region:"Java West",value:28888000,status:"Healthy"},
+    {depot:"DP-03",region:"Java East",value:8160000,status:"Healthy"},
+    {depot:"DP-03",region:"Java East",value:29450000,status:"SLM"},
+    {depot:"DP-03",region:"Java East",value:23324000,status:"SLM"},
+    {depot:"DP-03",region:"Java East",value:6720000,status:"SLM"},
+    {depot:"DP-03",region:"Java East",value:8096000,status:"RED"},
+    {depot:"DP-04",region:"Kalimantan",value:76440000,status:"RED"},
+    {depot:"DP-04",region:"Kalimantan",value:22440000,status:"RED"},
+    {depot:"DP-04",region:"Kalimantan",value:28920000,status:"SLM"},
+    {depot:"DP-04",region:"Kalimantan",value:17910000,status:"SLM"},
+    {depot:"DP-04",region:"Kalimantan",value:19320000,status:"Healthy"},
+    {depot:"DP-05",region:"Sumatra",value:34224000,status:"SLM"},
+    {depot:"DP-05",region:"Sumatra",value:40080000,status:"Healthy"},
+    {depot:"DP-05",region:"Sumatra",value:27510000,status:"RED"},
+    {depot:"DP-05",region:"Sumatra",value:59985000,status:"RED"},
+    {depot:"DP-05",region:"Sumatra",value:7956000,status:"RED"},
+    {depot:"DP-06",region:"Java West",value:17595000,status:"Healthy"},
+    {depot:"DP-06",region:"Java West",value:42360000,status:"RED"},
+    {depot:"DP-06",region:"Java West",value:31000000,status:"RED"},
+    {depot:"DP-06",region:"Java West",value:12960000,status:"RED"},
+    {depot:"DP-06",region:"Java West",value:35788000,status:"RED"},
+    {depot:"DP-07",region:"Java East",value:18600000,status:"Healthy"},
+    {depot:"DP-07",region:"Java East",value:78540000,status:"SLM"},
+    {depot:"DP-07",region:"Java East",value:11880000,status:"RED"},
+    {depot:"DP-07",region:"Java East",value:21488000,status:"Healthy"},
+    {depot:"DP-07",region:"Java East",value:43555000,status:"Healthy"},
+    {depot:"DP-08",region:"Kalimantan",value:630000,status:"RED"},
+    {depot:"DP-08",region:"Kalimantan",value:2312000,status:"RED"},
+    {depot:"DP-08",region:"Kalimantan",value:45480000,status:"Healthy"},
+    {depot:"DP-08",region:"Kalimantan",value:14700000,status:"RED"},
+    {depot:"DP-08",region:"Kalimantan",value:42625000,status:"RED"}
+  ];
+
+  var DASH_COLORS = { RED:"#C94B4B", SLM:"var(--dash-accent)", Healthy:"var(--dash-teal)" };
+
+  function dashFormatIDR(n){
+    if(n >= 1000000000) return (n/1000000000).toFixed(2) + "B";
+    if(n >= 1000000) return (n/1000000).toFixed(1) + "M";
+    return n.toLocaleString("en-US");
+  }
+
+  function dashRender(region){
+    var rows = region === "All" ? DASH_DATA : DASH_DATA.filter(function(d){ return d.region === region; });
+
+    var byDepot = {};
+    var order = [];
+    rows.forEach(function(d){
+      if(!byDepot[d.depot]){ byDepot[d.depot] = {RED:0, SLM:0, Healthy:0}; order.push(d.depot); }
+      byDepot[d.depot][d.status] += d.value;
+    });
+    order.sort();
+
+    var totals = {RED:0, SLM:0, Healthy:0, all:0};
+    rows.forEach(function(d){ totals[d.status] += d.value; totals.all += d.value; });
+
+    document.getElementById("kpi-total").textContent = dashFormatIDR(totals.all) + " IDR";
+    document.getElementById("kpi-red").textContent = dashFormatIDR(totals.RED) + " IDR";
+    document.getElementById("kpi-slm").textContent = dashFormatIDR(totals.SLM) + " IDR";
+    document.getElementById("kpi-healthy").textContent = dashFormatIDR(totals.Healthy) + " IDR";
+
+    // Draw stacked horizontal-ish grouped bars (vertical bars per depot, stacked by status)
+    var svg = document.getElementById("dash-chart");
+    var W = 640, H = 260, padL = 46, padR = 10, padT = 16, padB = 34;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var n = order.length || 1;
+    var gap = 14;
+    var barW = Math.max(18, (plotW - gap * (n - 1)) / n);
+
+    var maxVal = 0;
+    order.forEach(function(dep){
+      var t = byDepot[dep].RED + byDepot[dep].SLM + byDepot[dep].Healthy;
+      if(t > maxVal) maxVal = t;
+    });
+    if(maxVal === 0) maxVal = 1;
+
+    var svgNS = "http://www.w3.org/2000/svg";
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // gridlines
+    var gridColor = "var(--line)";
+    for(var g = 0; g <= 4; g++){
+      var gy = padT + plotH - (plotH * g / 4);
+      var line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", padL); line.setAttribute("x2", W - padR);
+      line.setAttribute("y1", gy); line.setAttribute("y2", gy);
+      line.setAttribute("stroke", gridColor); line.setAttribute("stroke-width", "1");
+      svg.appendChild(line);
+      var lbl = document.createElementNS(svgNS, "text");
+      lbl.setAttribute("x", padL - 6); lbl.setAttribute("y", gy + 3);
+      lbl.setAttribute("text-anchor", "end");
+      lbl.setAttribute("font-family", "IBM Plex Mono, monospace");
+      lbl.setAttribute("font-size", "8.5");
+      lbl.setAttribute("fill", "var(--ink-soft)");
+      lbl.textContent = dashFormatIDR(maxVal * g / 4);
+      svg.appendChild(lbl);
+    }
+
+    order.forEach(function(dep, i){
+      var x = padL + i * (barW + gap);
+      var vals = byDepot[dep];
+      var yCursor = padT + plotH;
+      ["Healthy","SLM","RED"].forEach(function(status){
+        var v = vals[status];
+        var hgt = (v / maxVal) * plotH;
+        if(hgt <= 0) return;
+        yCursor -= hgt;
+        var rect = document.createElementNS(svgNS, "rect");
+        rect.setAttribute("class", "dash-bar-seg");
+        rect.setAttribute("x", x); rect.setAttribute("y", yCursor);
+        rect.setAttribute("width", barW); rect.setAttribute("height", hgt);
+        rect.setAttribute("fill", DASH_COLORS[status]);
+        var title = document.createElementNS(svgNS, "title");
+        title.textContent = dep + " — " + status + ": " + v.toLocaleString("en-US") + " IDR";
+        rect.appendChild(title);
+        svg.appendChild(rect);
+      });
+      var dlabel = document.createElementNS(svgNS, "text");
+      dlabel.setAttribute("x", x + barW / 2); dlabel.setAttribute("y", H - 12);
+      dlabel.setAttribute("text-anchor", "middle");
+      dlabel.setAttribute("font-family", "IBM Plex Mono, monospace");
+      dlabel.setAttribute("font-size", "9");
+      dlabel.setAttribute("fill", "var(--ink-soft)");
+      dlabel.textContent = dep;
+      svg.appendChild(dlabel);
+    });
+  }
+
+  (function initDash(){
+    DASH_COLORS.SLM = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#C97A2E";
+    DASH_COLORS.Healthy = getComputedStyle(document.documentElement).getPropertyValue("--teal").trim() || "#2F6F6B";
+
+    var buttons = document.querySelectorAll(".dash-filter");
+    buttons.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        buttons.forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        dashRender(btn.getAttribute("data-region"));
+      });
+    });
+    dashRender("All");
+  })();
+</script>
